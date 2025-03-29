@@ -3,33 +3,33 @@ import styled from 'styled-components';
 
 type CounterPropsType = {
     counter: number
-    disabler: boolean
     incrementOnclick: () => void
     resetOnclick: () => void
-    maxCount:number
+    maxValue:number
+    minValue:number
 }
 
 
 export const Counter = (props: CounterPropsType) => {
-    const isMaxCount=props.maxCount===props.counter
+    const isMaxValue=props.maxValue===props.counter
 
     return (
             <WrapStyled>
-                <WindowStyled isMaxCount={isMaxCount}  >{props.counter}</WindowStyled>
+                <WindowStyled ismaxValue={isMaxValue}>{props.counter}</WindowStyled>
                 <BtnWrapper>
-                    <UniversalButton  disabler={props.disabler} title={'inc'} onClick={props.incrementOnclick}/>
-                    <UniversalButton disabler={!props.counter} title={'reset'} onClick={props.resetOnclick}/>
+                    <UniversalButton  disabler={props.counter===props.maxValue} title={'inc'} onClick={props.incrementOnclick}/>
+                    <UniversalButton disabler={props.counter===props.minValue} title={'reset'} onClick={props.resetOnclick}/>
                 </BtnWrapper>
             </WrapStyled>
 
     );
 };
-const WrapStyled = styled.div`
+export const WrapStyled = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    width: 220px;
-    height: 170px;
+    max-width: 250px;
+    width: 100%;
     border: 2px solid deepskyblue;
     border-radius: 15px;
     padding: 15px;
@@ -38,18 +38,18 @@ const WrapStyled = styled.div`
 }
 `
 
-const WindowStyled = styled.div<{isMaxCount:boolean}>`
+export const WindowStyled = styled.div<{ismaxValue?:boolean}>`
     display: flex;
     border: 2px solid deepskyblue;
     height: 100%;
     justify-content: center;
     align-items: center;
     background-color: deepskyblue;
-    color: ${props=>props.isMaxCount ? 'red': '#1d1d1e'};;
+    color: ${props=>props.ismaxValue ? 'red': '#1d1d1e'};;
     
 `
 
-const BtnWrapper = styled.div`
+export const BtnWrapper = styled.div`
     display: flex;
     border: 2px solid deepskyblue;
     justify-content: space-around;

@@ -1,24 +1,28 @@
 import './App.css'
 import {Counter} from './components/Counter.tsx';
 import {useState} from 'react';
+import {SetValues} from './components/SetValues.tsx';
+import {FlexWrapper} from './components/FlexWrapper.tsx';
 
 function App() {
     const [counter, setCounter] = useState<number>(0);
-    const maxCount = 5
+    const [maxValue,setMaxvalue] = useState<number>(5);
+    const [minValue,setMinvalue] = useState<number>(0);
 
     const incrementOnclick = () => {
-        if (counter < maxCount) {
+        if (counter < maxValue) {
             setCounter(counter + 1)
         }
     }
     const resetOnclick = () => {
-        setCounter(0)
+        setCounter(minValue)
     }
 
     return (
-        <div>
-            <Counter maxCount={maxCount}  counter={counter} disabler={counter===maxCount} incrementOnclick={incrementOnclick} resetOnclick={resetOnclick}/>
-        </div>
+        <FlexWrapper>
+            <SetValues setCounter={setCounter} setMaxvalue={setMaxvalue} maxValue={maxValue} counter={counter} setMinvalue={setMinvalue} minValue={minValue}/>
+            <Counter maxValue={maxValue} minValue={minValue}  counter={counter} incrementOnclick={incrementOnclick} resetOnclick={resetOnclick}/>
+        </FlexWrapper>
 
     )
 }
