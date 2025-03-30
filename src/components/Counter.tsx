@@ -7,6 +7,7 @@ type CounterPropsType = {
     resetOnclick: () => void
     maxValue:number
     minValue:number
+    flag:boolean
 }
 
 
@@ -15,7 +16,7 @@ export const Counter = (props: CounterPropsType) => {
 
     return (
             <WrapStyled>
-                <WindowStyled ismaxValue={isMaxValue}>{props.counter}</WindowStyled>
+                <WindowStyled flag={props.flag} isMaxValue={isMaxValue}>{props.flag?props.counter:'incorrect value'}</WindowStyled>
                 <BtnWrapper>
                     <UniversalButton  disabler={props.counter===props.maxValue} title={'inc'} onClick={props.incrementOnclick}/>
                     <UniversalButton disabler={props.counter===props.minValue} title={'reset'} onClick={props.resetOnclick}/>
@@ -38,14 +39,14 @@ export const WrapStyled = styled.div`
 }
 `
 
-export const WindowStyled = styled.div<{ismaxValue?:boolean}>`
+export const WindowStyled = styled.div<{isMaxValue?:boolean,flag:boolean}>`
     display: flex;
-    border: 2px solid deepskyblue;
+    border: 2px solid ${props=>!props.flag ? 'red': 'deepskyblue'};
     height: 100%;
     justify-content: center;
     align-items: center;
     background-color: deepskyblue;
-    color: ${props=>props.ismaxValue ? 'red': '#1d1d1e'};;
+    color: ${props=>props.isMaxValue||!props.flag ? 'red': '#1d1d1e'};;
     
 `
 
